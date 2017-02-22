@@ -6,7 +6,7 @@ import constants
 from datetime import date
 
 
-AUTH_USER_MODEL = getattr(settings, "AUTH_USER_MODEL", "auth.Citizen")
+AUTH_USER_MODEL = getattr(settings, "AUTH_USER_MODEL", "auth.User")
 
 class CitizenProfile(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -170,8 +170,7 @@ class CitizenBankDetails(models.Model):
 
 class GovOfficerProfile(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
-    officer = models.OneToOneField(AUTH_USER_MODEL)
-    department = models.ForeignKey()
+    officer = models.OneToOneField(AUTH_USER_MODEL, unique=True)
     authorised = models.BooleanField(default=True)
     authorization_level = models.CharField(max_length=20, choices=constants.authorization_level_choices)
     @property
