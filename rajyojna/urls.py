@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^api/', include('rajyojna.api_urls')),

@@ -11,11 +11,10 @@ AUTH_USER_MODEL = getattr(settings, "AUTH_USER_MODEL", "auth.User")
 class CitizenProfile(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     citizen = models.OneToOneField(AUTH_USER_MODEL, unique=True)
-    signup_done = models.BooleanField(default=False)
-    signup_stage = models.IntegerField(default=1)
-    email_verified = models.BooleanField(default=False)
-    authorised = models.BooleanField(default=True)
-    blocked = models.BooleanField(default=False)
+    #signup_done = models.BooleanField(default=False)
+    #signup_stage = models.IntegerField(default=1)
+    #email_verified = models.BooleanField(default=False)
+    #authorised = models.BooleanField(default=True)
     sex = models.CharField(max_length=100, choices=constants.sex_choices)
     category = models.CharField(max_length=100, choices=constants.category_choices)
     language = models.CharField(max_length=100, choices=rajyojna.constants.language_choices)
@@ -65,7 +64,6 @@ class CitizenProfile(models.Model):
             return True
         else:
             return False
-    """
 
     def aadhar_num(self):
         try:
@@ -81,13 +79,15 @@ class CitizenProfile(models.Model):
         except CitizenAadhar.DoesNotExist:
             return False
 
+    """
+
     def primary_language(self):
         try:
             language = CitizenLanguage.objects.get(citizen_profile=self, primary=True).language
             return language
         except CitizenLanguage.DoesNotExist:
             return ''
-
+    """
     def primary_phone_number(self):
         try:
             phone_number = CitizenPhoneNumber.objects.get(citizen_profile=self, primary=True).phone_number
@@ -107,6 +107,7 @@ class CitizenProfile(models.Model):
             return verified
         except CitizenPhoneNumber.DoesNotExist:
             return False
+   """
 
     def permanent_address(self):
         try:
@@ -116,10 +117,11 @@ class CitizenProfile(models.Model):
 
     def bank_details(self):
         try:
-            return CitizenBankDetails.objects.get(citizen_profile=self)
+            return CitizenBankProfile.objects.get(citizen_profile=self)
         except:
             return None
 
+"""
 class CitizenAadhar(models.Model):
     class Meta:
         get_latest_by = "created"
@@ -147,32 +149,38 @@ class CitizenPhoneNumber(models.Model):
 
     def __unicode__(self):
         return unicode("(%s)%s"%(self.calling_code, self.phone_number))
+"""
 
 class CitizenAddress(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     citizen_profile = models.ForeignKey(CitizenProfile)
-    address_line_1 = models.TextField()
-    address_line_2 = models.TextField()
-    landmark = models.TextField()
+    address_line_1 = models.TextField(blank=True)
+    address_line_2 = models.TextField(blank=True)
+    landmark = models.TextField(blank=True)
     pin_code = models.IntegerField(blank=True)
     district = models.CharField(max_length=150, blank=True, null=True)
-    state = models.CharField(max_length=100, choices=rajyojna.constants.states_in_india_choices)
-    country = models.CharField(max_length=50, default="INDIA")
+    state = models.CharField(max_length=100, choices=rajyojna.constants.states_in_india_choices, blank=True)
+    country = models.CharField(max_length=50, default="INDIA", blank=True)
     permanent = models.BooleanField(default=False)
     verified = verified = models.BooleanField(default=False)
 
-class CitizenBankDetails(models.Model):
+class CitizenBankDetail(models.Model):
     citizen_profile = models.ForeignKey(CitizenProfile)
     bank_account_name = models.CharField(max_length=150, blank=True, null=True)
-    bank_account_number = models.TextField(blank=True, null=True)
-    bank_ifsc = models.TextField(blank=True, null=True)
+    bank_account_number = models.CharField(max_length=150, blank=True, null=True)
+    bank_ifsc = models.CharField(max_length=150, blank=True, null=True)
     verified = verified = models.BooleanField(default=False)
+
+
+class DepartmentProfile(models.Model):
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    full_name = models.TextField()
+    short_name = models.CharField(max_length=150, blank=True, null=True)
 
 class GovOfficerProfile(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     officer = models.OneToOneField(AUTH_USER_MODEL, unique=True)
-    authorised = models.BooleanField(default=True)
-    authorization_level = models.CharField(max_length=20, choices=constants.authorization_level_choices)
+    department = models.ForeignKey(DepartmentProfile)
     @property
     def full_name(self):
         return self.officer.first_name + " " + self.officer.last_name
