@@ -15,7 +15,7 @@ class CitizenCreationForm(forms.ModelForm):
 
     class Meta:
         model = Citizen
-        fields = ['username', 'aadhar_uid', 'phone', 'email']
+        fields = ['username', 'aadhar_uid',]
 
     def clean_password2(self):
         # Check that the two password entries match
