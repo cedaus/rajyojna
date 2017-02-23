@@ -20,7 +20,7 @@ class Citizen(AbstractBaseUser):
     username = models.CharField(max_length=100, unique=True)
     aadhar_uid = models.IntegerField(unique=True)
     phone = models.IntegerField(null=True, blank=True, unique=True)
-    email = models.EmailField(max_length=255, null=True, blank=True, unique=True)
+    email = models.EmailField(max_length=255, blank=True, unique=True, default=None)
     aadhar_verified = models.BooleanField(default=False)
     phone_verified = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)

@@ -17,7 +17,7 @@ class CitizenProfile(models.Model):
     sex = models.CharField(max_length=100, choices=constants.sex_choices)
     category = models.CharField(max_length=100, choices=constants.category_choices)
     language = models.CharField(max_length=100, choices=rajyojna.constants.language_choices)
-    pan_num = models.CharField(max_length=10, unique=True, null=True, blank=True)
+    pan_num = models.CharField(max_length=10, unique=True, blank=True, default=None)
     occupation = models.CharField(max_length=100, choices=constants.occupation_choices)
     education_status = models.CharField(max_length=100, choices=constants.education_status_choices)
     income_status = models.CharField(max_length=100, choices=constants.income_status_choices)
@@ -82,7 +82,7 @@ class CitizenAddress(models.Model):
     address_line_2 = models.TextField(blank=True)
     landmark = models.TextField(blank=True)
     pin_code = models.IntegerField(blank=True)
-    district = models.CharField(max_length=150, blank=True, null=True)
+    district = models.CharField(max_length=150, blank=True)
     state = models.CharField(max_length=100, choices=rajyojna.constants.states_in_india_choices, blank=True)
     country = models.CharField(max_length=50, default="INDIA", blank=True)
     permanent = models.BooleanField(default=False)
@@ -91,16 +91,16 @@ class CitizenAddress(models.Model):
 
 class CitizenBankDetail(models.Model):
     citizen_profile = models.OneToOneField(CitizenProfile)
-    bank_account_name = models.CharField(max_length=150, blank=True, null=True)
-    bank_account_number = models.CharField(max_length=150, blank=True, null=True)
-    bank_ifsc = models.CharField(max_length=150, blank=True, null=True)
+    bank_account_name = models.CharField(max_length=150, blank=True)
+    bank_account_number = models.CharField(max_length=150, blank=True)
+    bank_ifsc = models.CharField(max_length=150, blank=True)
     verified = verified = models.BooleanField(default=False)
 
 
 class DepartmentProfile(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     full_name = models.TextField()
-    short_name = models.CharField(max_length=150, blank=True, null=True)
+    short_name = models.CharField(max_length=150, blank=True)
 
 class GovOfficerProfile(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
