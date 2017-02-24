@@ -17,11 +17,11 @@ class CitizenProfile(models.Model):
     sex = models.CharField(max_length=100, choices=constants.sex_choices)
     category = models.CharField(max_length=100, choices=constants.category_choices)
     language = models.CharField(max_length=100, choices=rajyojna.constants.language_choices)
-    pan_num = models.CharField(max_length=10, unique=True, blank=True, default=None)
+    pan_num = models.CharField(max_length=10, unique=True, blank=True, default='NA', null=True)
     occupation = models.CharField(max_length=100, choices=constants.occupation_choices)
     education_status = models.CharField(max_length=100, choices=constants.education_status_choices)
     income_status = models.CharField(max_length=100, choices=constants.income_status_choices)
-    birth = models.DateField()
+    birth = models.DateField(null=True, blank=True)
     death = models.DateField(null=True, blank=True)
 
     class Meta:
@@ -81,7 +81,7 @@ class CitizenAddress(models.Model):
     address_line_1 = models.TextField(blank=True)
     address_line_2 = models.TextField(blank=True)
     landmark = models.TextField(blank=True)
-    pin_code = models.IntegerField(blank=True)
+    pin_code = models.IntegerField(null=True, blank=True)
     district = models.CharField(max_length=150, blank=True)
     state = models.CharField(max_length=100, choices=rajyojna.constants.states_in_india_choices, blank=True)
     country = models.CharField(max_length=50, default="INDIA", blank=True)

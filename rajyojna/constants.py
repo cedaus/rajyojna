@@ -20,5 +20,6 @@ language_choices = [tuple([v, k]) for k, v in language.items()]
 states_in_india = {
     'AN': 'Andaman and Nicobar Islands',
     'AP': 'Andhra Pradesh',
+    'UP': 'Uttar Pradesh',
 }
 states_in_india_choices = [tuple([v, k]) for k, v in states_in_india.items()]

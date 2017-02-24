@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from datetime import date
-
+from rajyojna.fields import NullableEmailField
 
 class CitizenManager(BaseUserManager):
      def create_citizen(self, username, aadhar_uid, password):
@@ -17,10 +17,10 @@ class CitizenManager(BaseUserManager):
 
 
 class Citizen(AbstractBaseUser):
-    username = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100, unique=True, null=True)
     aadhar_uid = models.IntegerField(unique=True)
     phone = models.IntegerField(null=True, blank=True, unique=True)
-    email = models.EmailField(max_length=255, blank=True, unique=True, default=None)
+    email = NullableEmailField(max_length=255, blank=True, unique=True, null=True)
     aadhar_verified = models.BooleanField(default=False)
     phone_verified = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)

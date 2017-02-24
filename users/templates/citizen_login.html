@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Citizen Login{% endblock %}
+
+{% block head %}
+{{ block.super }}
+{% endblock %}
+
+{% block sections %}
+<h3>Citizen Login</h3>
+<label for="aadhar-uid">Citizen Aadhar Uid</label><br>
+<input id="aadhar-uid"><br>
+<label for="password">Citizen Password</label><br>
+<input id="password"><br>
+<button onclick="citizen_login()">Login</button>
+
+<h3>Citizen Signup</h3>
+<label for="cs-first-name">First Name</label><br>
+<input id="cs-first-name"><br>
+
+<label for="cs-last-name">Last Name</label><br>
+<input id="cs-last-name"><br>
+
+<label for="cs-aadhar-uid">Aadhar Id</label><br>
+<input id="cs-aadhar-uid"><br>
+
+<label for="cs-password">Password</label><br>
+<input id="cs-password"><br>
+
+<label for="cs-password-again">Enter Password Again</label><br>
+<input id="cs-password-again"><br>
+
+<button onclick="citizen_signup()">Signup</button>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block script %}
+<script>
+function citizen_login() {
+  console.log("I am working good");
+  var aadhar_uid = $("#aadhar-uid").val();
+  var password = $("#password").val();
+  var test_passed = true;
+  if (aadhar_uid.length ==0 || password.length == 0) {
+    console.log("Please fill fields");
+    test_passed = false;
+  }
+  var data = {"aadhar_uid": aadhar_uid, "password": password};
+  if (test_passed) {
+    $.ajax({
+      type: "POST",
+      url: "{% url 'citizen_login_aadhar' %}",
+      data: data,
+      dataType: "json",
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(request, errorType, errorMessage) {
+        alert("Error: " + errorType + " with message: " + errorMessage);
+      },
+      beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}"); },
+      complete: function(response) {},
+      cache: true
+    });
+  }
+}
+
+function citizen_signup() {
+  console.log("I am working good");
+  var first_name = $("#cs-first-name").val();
+  var last_name = $("#cs-last-name").val();
+  var aadhar_uid = $("#cs-aadhar-uid").val();
+  var password = $("#cs-password").val();
+  var password_again = $("#cs-password-again").val();
+  var test_passed = true;
+  if (first_name.length == 0 || last_name.length == 0 || aadhar_uid.length ==0 || password.length == 0 || password_again.length == 0) {
+    alert("Please fill fields");
+    test_passed = false;
+  }
+  if (password != password_again) {
+    alert("Password doesn't match")
+    test_passed = false
+  }
+  var data = {"first_name":first_name, "last_name":last_name, "aadhar_uid": aadhar_uid, "password": password};
+  if (test_passed) {
+    $.ajax({
+      type: "PUT",
+      url: "{% url 'citizen_signup' %}",
+      data: data,
+      dataType: "json",
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(request, errorType, errorMessage) {
+        alert("Error: " + errorType + " with message: " + errorMessage);
+      },
+      beforeSend: function(xhr) { xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}"); },
+      complete: function(response) {},
+      cache: true
+    });
+  }
+}
+
+</script>
+{% endblock %}

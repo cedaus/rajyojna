@@ -58,7 +58,7 @@ ROOT_URLCONF = 'rajyojna.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,  'templates'), os.path.join(BASE_DIR,'users', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,6 +84,8 @@ DATABASES = {
     }
 }
 
+#Authentication Backends
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend', 'customauth.backends.CitizenAuthBackend', ]
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

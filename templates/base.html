@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load staticfiles %}
+    <title>{% block title %} RajYojna {% endblock %}</title>
+    <!-- The below 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block head %}
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- CSS -->
+    <!-- Javascript -->
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    {% endblock %}
+  </head>
+
+  <body>
+
+    {% block sections %}
+    {% endblock %}
+
+    {% block modals %}
+    {% endblock %}
+
+  	<!-- Javascript -->
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>
