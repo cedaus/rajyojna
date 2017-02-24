@@ -4,6 +4,7 @@ from django.db import models
 import rajyojna.constants
 import constants
 from datetime import date
+from rajyojna.fields import NullableCharField
 
 
 AUTH_USER_MODEL = getattr(settings, "AUTH_USER_MODEL", "auth.User")
@@ -17,7 +18,7 @@ class CitizenProfile(models.Model):
     sex = models.CharField(max_length=100, choices=constants.sex_choices)
     category = models.CharField(max_length=100, choices=constants.category_choices)
     language = models.CharField(max_length=100, choices=rajyojna.constants.language_choices)
-    pan_num = models.CharField(max_length=10, unique=True, blank=True, default='NA', null=True)
+    pan_num = NullableCharField(max_length=10, unique=True, blank=True, null=True)
     occupation = models.CharField(max_length=100, choices=constants.occupation_choices)
     education_status = models.CharField(max_length=100, choices=constants.education_status_choices)
     income_status = models.CharField(max_length=100, choices=constants.income_status_choices)

@@ -11,11 +11,11 @@ class CitizenAuthBackend(object):
         except Citizen.DoesNotExist:
             return None
 
-    def get_citizen(self, username):
+    def get_user(self, user_id):
         try:
-            citizen = Citizen.objects.get(username=username)
+            citizen = Citizen.objects.get(pk=user_id)
             if citizen.is_active:
                 return citizen
             return None
-        except Citizens.DoesNotExist:
+        except Citizen.DoesNotExist:
             return None

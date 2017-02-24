@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from customauth.models import Citizen
 from .models import CitizenProfile
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 import models, serializers
 from .utils import create_citizen
@@ -23,6 +23,8 @@ class CitizenLogin(APIView):
             return Response('Invalid Login Method', status=status.HTTP_400_BAD_REQUEST)
         if citizen is None:
             return Response('Invalid Aadhar Id or Password', status=status.HTTP_400_BAD_REQUEST)
+
+        login(request, citizen)
         return Response('success', status=status.HTTP_200_OK)
 
 class CitizenSignup(APIView):

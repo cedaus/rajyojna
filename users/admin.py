@@ -18,7 +18,7 @@ class CitizenProfileAdmin(admin.ModelAdmin):
         ('Business Info', {'fields': ('pan_num', 'occupation', 'income_status',)}),
     ]
 
-    list_display = ['citizenid', 'first_name', 'last_name', 'sex', 'category', 'username', 'phone', 'email', 'is_authorized', 'is_active', 'signup_done',]
+    list_display = ['citizenid', 'first_name', 'last_name', 'sex', 'category', 'username', 'phone', 'email', 'pan_num', 'is_authorized', 'is_active', 'signup_done',]
     inlines = [ CitizenAddressInline, CitizenBankDetailInline ]
 
     def citizenid(self, obj):
@@ -44,6 +44,9 @@ class CitizenProfileAdmin(admin.ModelAdmin):
 
     def email(self, obj):
         return obj.citizen.email
+
+    def pan_num(self, obj):
+        return obj.pan_num
 
     def is_authorized(self, obj):
         return obj.citizen.is_authorized
